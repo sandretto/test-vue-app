@@ -1,20 +1,42 @@
 import axios from "axios";
+import DataLoader from "../DataLoader/DataLoader.vue";
 
 export default {
   name: "ItemsList",
+  components: {
+    DataLoader
+  },
   data() {
     return {
       title: "",
       completed: false,
       itemsList: [],
+      loaderActive: false,
     };
   },
   async mounted() {
-    let result = await axios.get("https://jsonplaceholder.typicode.com/todos");
-    console.log(result.data);
-    this.itemsList = result.data;
+    this.showLoader();
+      setTimeout(async () => {
+        await this.loadData();
+        this.hideLoader();
+      }, 5000);
   },
   methods: {
+    async loadData() {
+      let result = await axios.get("https://jsonplaceholder.typicode.com/todos");
+      console.log(result.data);
+      this.itemsList = result.data;
+    },
+    async refreshData () {
+      this.itemsList = [];
+      await this.loadData();
+    },
+    showLoader () {
+      this.loaderActive = true;
+    },
+    hideLoader () {
+      this.loaderActive = false;
+    },
     toggleCheckbox() {
       console.log(this.checkbox);
       this.checkbox = !this.checkbox;

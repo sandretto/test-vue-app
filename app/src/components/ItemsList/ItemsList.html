@@ -1,60 +1,42 @@
 <section class="container">
-    <div class="list-page">
-      <div class="header">
-        <h1 class="header__name">List of items</h1>
-      </div>
-      <div class="app">
-        <form class="app-form" action="#">
-          <label class="app-form__text">Title:</label>
-          <input
-            class="app-form__input"
-            @keyup.enter="add"
-            type="text"
-            v-model="title"
-            placeholder="New item"
-          />
-          <label class="app-form__text">Status:</label>
-          <label class="app-form__switch">
-            <input
-              class="app-form__input"
-              type="checkbox"
-              :checked="this.completed"
-              @click="this.completed = !this.completed"
-            />
-            <div class="slider round"></div>
-          </label>
-          <button @click="add" class="app-form__add">Add new item</button>
-        </form>
-        <div class="list">
-          <ul class="list__items">
-            <li
-              class="list__item"
-              v-for="(item, index) in itemsList"
-              :key="item.id"
-            >
-              <span>
-                {{ item.title }} —
-                <span class="list__completed" v-if="item.completed"
-                  >Completed</span
-                >
-                <span class="list__todo" v-else>To do</span>
-              </span>
+  <div class="list-page">
+    <DataLoader :active="loaderActive" message="Please wait 5 seconds" />
+    <div class="header">
+      <h1 class="header__name">List of items</h1>
+      <button class="app-form__input" @click="refreshData">Refresh data</button>
+    </div>
+    <div class="app">
+      <form class="app-form" action="#">
+        <label class="app-form__text">Title:</label>
+        <input class="app-form__input" @keyup.enter="add" type="text" v-model="title" placeholder="New item" />
+        <label class="app-form__text">Status:</label>
+        <label class="app-form__switch">
+          <input class="app-form__input" type="checkbox" :checked="this.completed"
+            @click="this.completed = !this.completed" />
+          <div class="slider round"></div>
+        </label>
+        <button @click="add" class="app-form__add">Add new item</button>
+      </form>
+      <div class="list">
+        <ul class="list__items">
+          <li class="list__item" v-for="(item, index) in itemsList" :key="item.id">
+            <span>
+              {{ item.title }} —
+              <span class="list__completed" v-if="item.completed">Completed</span>
+              <span class="list__todo" v-else>To do</span>
+            </span>
 
-              <span class="list__buttons">
-                <label class="app-form__switch">
-                  <input
-                    class="app-form__input"
-                    type="checkbox"
-                    :checked="item.completed"
-                    @click="item.completed = !item.completed"
-                  />
-                  <div class="slider round"></div>
-                </label>
-                <button @click="remove(index)" class="list__remove">x</button>
-              </span>
-            </li>
-          </ul>
-        </div>
+            <span class="list__buttons">
+              <label class="app-form__switch">
+                <input class="app-form__input" type="checkbox" :checked="item.completed"
+                  @click="item.completed = !item.completed" />
+                <div class="slider round"></div>
+              </label>
+              <button @click="remove(index)" class="list__remove">x</button>
+            </span>
+          </li>
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
