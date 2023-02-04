@@ -1,8 +1,10 @@
 .header {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: baseline;
+    justify-content: space-around;
     width: 659px;
+    margin-left: 60px;
     color: #ffffff;
   }
   .container {
