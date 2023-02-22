@@ -4,7 +4,7 @@ import DataLoader from "../DataLoader/DataLoader.vue";
 export default {
   name: "ItemsList",
   components: {
-    DataLoader
+    DataLoader,
   },
   data() {
     return {
@@ -16,25 +16,27 @@ export default {
   },
   async mounted() {
     this.showLoader();
-      setTimeout(async () => {
-        await this.loadData();
-        this.hideLoader();
-      }, 5000);
+    setTimeout(async () => {
+      await this.loadData();
+      this.hideLoader();
+    }, 3000);
   },
   methods: {
     async loadData() {
-      let result = await axios.get("https://jsonplaceholder.typicode.com/todos");
+      let result = await axios.get(
+        "https://jsonplaceholder.typicode.com/todos"
+      );
       console.log(result.data);
       this.itemsList = result.data;
     },
-    async refreshData () {
+    async refreshData() {
       this.itemsList = [];
       await this.loadData();
     },
-    showLoader () {
+    showLoader() {
       this.loaderActive = true;
     },
-    hideLoader () {
+    hideLoader() {
       this.loaderActive = false;
     },
     toggleCheckbox() {
